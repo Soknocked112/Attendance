@@ -1,0 +1,53 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f8;
+    margin: 0;
+    padding: 20px;
+}
+
+h2 {
+    text-align: center;
+    color: #2c3e50;
+}
+
+#students {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 8px;
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+#students label {
+    background-color: #ecf0f1;
+    padding: 8px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#students input {
+    margin-right: 6px;
+}
+
+hr {
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+p {
+    max-width: 800px;
+    margin: 6px auto;
+    font-size: 16px;
+}
+
+#presentCount {
+    font-weight: bold;
+    color: green;
+}
+
+#rolls {
+    color: #2c3e50;
+}
