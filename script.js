@@ -82,32 +82,52 @@ function update() {
 
 function updateCopyText(sorted) {
   const box = document.getElementById('copyTextBox');
-  const rolls = sorted.length ? sorted.join(', ') : 'None';
+  const btn = document.getElementById('copyBtn');
+  if (!box || !btn) return;
+  if (!sorted.length) {
+    box.textContent = 'Mark attendance above to generate shareable text.';
+    btn.textContent = 'Copy';
+    btn.className = 'btn copy-btn';
+    return;
+  }
   const now = new Date();
   const dateStr = now.toLocaleDateString('en-IN', { day: '2-digit', month: 'long', year: 'numeric' });
-  box.textContent = `Attendance for MCA Sem 2 on ${dateStr} is : ${rolls}`;
-  const btn = document.getElementById('copyBtn');
+  box.textContent = 'Attendance for MCA Sem 2 on ' + dateStr + ' is : ' + sorted.join(', ');
+  btn.textContent = 'Copy';
   btn.className = 'btn copy-btn';
-  btn.textContent = '⎘ Copy';
 }
 
 function copyText() {
-  const text = document.getElementById('copyTextBox').textContent;
+  const box = document.getElementById('copyTextBox');
+  const btn = document.getElementById('copyBtn');
+  const text = box.textContent;
   if (!text || text === 'Mark attendance above to generate shareable text.') return;
-  navigator.clipboard.writeText(text).then(() => {
-    const btn = document.getElementById('copyBtn');
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(() => {
+      btn.className = 'btn copy-btn copied';
+      btn.textContent = 'Copied!';
+      setTimeout(() => {
+        btn.className = 'btn copy-btn';
+        btn.textContent = 'Copy';
+      }, 2000);
+    });
+  } else {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
     btn.className = 'btn copy-btn copied';
-    btn.textContent = '✓ Copied!';
+    btn.textContent = 'Copied!';
     setTimeout(() => {
       btn.className = 'btn copy-btn';
-      btn.textContent = '⎘ Copy';
+      btn.textContent = 'Copy';
     }, 2000);
-  }).catch(() => {
-    const range = document.createRange();
-    range.selectNode(document.getElementById('copyTextBox'));
-    window.getSelection().removeAllRanges();
-    window.getSelection().addRange(range);
-  });
+  }
 }
 
 function saveSession() {
