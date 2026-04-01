@@ -76,6 +76,38 @@ function update() {
     ? allAbsent.slice(0, 24).map(r => `<span class="chip absent">${r}</span>`).join('')
       + (allAbsent.length > 24 ? `<span class="chip absent">+${allAbsent.length - 24}</span>` : '')
     : '<span class="empty-note">Full attendance!</span>';
+
+  updateCopyText(sorted);
+}
+
+function updateCopyText(sorted) {
+  const box = document.getElementById('copyTextBox');
+  const rolls = sorted.length ? sorted.join(', ') : 'None';
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-IN', { day: '2-digit', month: 'long', year: 'numeric' });
+  box.textContent = `Attendance for MCA Sem 2 on ${dateStr} is : ${rolls}`;
+  const btn = document.getElementById('copyBtn');
+  btn.className = 'btn copy-btn';
+  btn.textContent = '⎘ Copy';
+}
+
+function copyText() {
+  const text = document.getElementById('copyTextBox').textContent;
+  if (!text || text === 'Mark attendance above to generate shareable text.') return;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.className = 'btn copy-btn copied';
+    btn.textContent = '✓ Copied!';
+    setTimeout(() => {
+      btn.className = 'btn copy-btn';
+      btn.textContent = '⎘ Copy';
+    }, 2000);
+  }).catch(() => {
+    const range = document.createRange();
+    range.selectNode(document.getElementById('copyTextBox'));
+    window.getSelection().removeAllRanges();
+    window.getSelection().addRange(range);
+  });
 }
 
 function saveSession() {

@@ -331,7 +331,30 @@ body {
   text-align: right;
 }
 
-/* Responsive */
+/* Copy text */
+.copy-text-box {
+  font-size: 13px;
+  line-height: 1.7;
+  color: #2c3e50;
+  background: #f4f6f8;
+  border: 1px solid #dde3ea;
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin: 8px 0 10px;
+  word-break: break-word;
+}
+
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.copy-btn.copied {
+  background: #eaf3de;
+  border-color: #97c459;
+  color: #3b6d11;
+}
 @media (min-width: 640px) {
   .metrics {
     grid-template-columns: repeat(4, minmax(0, 1fr));
