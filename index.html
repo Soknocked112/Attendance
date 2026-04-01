@@ -1,25 +1,72 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Attendance Management</title>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Attendance Management</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <h2>Attendance Management System</h2>
+<div class="app">
+  <div class="header">
+    <span class="header-title">Attendance</span>
+    <span class="date-badge" id="dateBadge"></span>
+  </div>
 
-    <!-- Student checkboxes will appear here -->
-    <div id="students"></div>
+  <div class="metrics">
+    <div class="metric"><div class="metric-label">Total</div><div class="metric-value" id="mTotal">62</div></div>
+    <div class="metric"><div class="metric-label">Present</div><div class="metric-value green" id="mPresent">0</div></div>
+    <div class="metric"><div class="metric-label">Absent</div><div class="metric-value red" id="mAbsent">62</div></div>
+    <div class="metric"><div class="metric-label">Rate</div><div class="metric-value amber" id="mPct">0%</div></div>
+  </div>
 
-    <hr>
+  <div class="two-col">
+    <div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Mark attendance</span>
+          <div class="btn-row">
+            <button class="btn success" onclick="markAll(true)">All present</button>
+            <button class="btn danger-btn" onclick="markAll(false)">Clear</button>
+            <button class="btn primary" onclick="saveSession()">Save</button>
+          </div>
+        </div>
+        <div class="search-row">
+          <input type="text" inputmode="numeric" id="searchBox" placeholder="Search roll no..." oninput="renderGrid()">
+        </div>
+        <div class="grid" id="rollGrid"></div>
+      </div>
 
-    <p>Total Students: <span id="total">0</span></p>
-    <p>Present Students: <span id="presentCount">0</span></p>
-    <p>Present Roll Numbers (Ascending): <span id="rolls">None</span></p>
+      <div class="card">
+        <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar" style="width:0%"></div></div>
+        <div class="pct-label" id="pctLabel">0 of 62 present</div>
+        <div class="section-label">Present</div>
+        <div class="chip-list" id="presentChips"><span class="empty-note">None marked yet</span></div>
+        <div class="section-label">Absent</div>
+        <div class="chip-list" id="absentChips"><span class="empty-note">All absent</span></div>
+      </div>
+    </div>
 
-    <!-- JavaScript file -->
-    <script src="script.js"></script>
+    <div class="sidebar-stack">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">AI insights</span>
+          <button class="btn primary" onclick="getAIInsight()">Analyse</button>
+        </div>
+        <div class="ai-box" id="aiBox"><span class="muted italic">Tap "Analyse" to get AI-powered insights for today's session.</span></div>
+      </div>
 
+      <div class="card">
+        <span class="card-title">Session history</span>
+        <div class="history-list" id="historyList"><span class="empty-note">No sessions saved yet</span></div>
+        <div class="section-label" style="margin-top:14px;">Weekly trend</div>
+        <div class="bar-chart" id="barChart"><span class="empty-note">Save sessions to see trend</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
